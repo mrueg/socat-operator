@@ -8,6 +8,8 @@ A [static pod](https://kubernetes.io/docs/tasks/configure-pod-container/static-p
 The static pod can be extended to use a second shared volume that provides configuration data to spin up multiple socat processes for different sockets in parallel.
 The configuration in this shared volume is provided by an operator running inside Kubernetes. It creates the config using a CustomResourceDefinition and spawns the necessary Kubernetes objects like DaemonSets, Services with correct labels so they appear on the right hosts.
 
+![Initial Design Diagram](initialdesign.png)
+
 ## Purpose
 The main purpose for this is to scrape metrics from services that are only exposed on localhost.
 If [kubeadm](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm/) is used to create a cluster, it creates several static pods (kube-scheduler, kube-controller-manager), that only listen on localhost by default. In order to collect metrics from those pods, one would need to expose them on the Node itself, which adds an additional risk since the service is exposed outside.
